@@ -11,110 +11,107 @@ using enterpriseweek8.Models;
 
 namespace enterpriseweek8.Controllers
 {
-    public class StudentsController : Controller
+    public class DepartmentsController : Controller
     {
         private ContosoModel db = new ContosoModel();
 
-        // GET: Students
+        // GET: Departments
         public async Task<ActionResult> Index()
         {
-            return View(await db.Students.ToListAsync());
+            return View(await db.Departments.ToListAsync());
         }
 
-        // GET: Students/Details/5
+        // GET: Departments/Details/5
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Student student = await db.Students.FindAsync(id);
-            if (student == null)
+            Department department = await db.Departments.FindAsync(id);
+            if (department == null)
             {
                 return HttpNotFound();
             }
-            return View(student);
+            return View(department);
         }
 
-        // GET: Students/Create
+        // GET: Departments/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Students/Create
+        // POST: Departments/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        //auto security!
         [ValidateAntiForgeryToken]
-        //never bind with a star, because it leaves you open to injection attacks ZAC
-        public async Task<ActionResult> Create([Bind(Include = "StudentID,LastName,FirstMidName,EnrollmentDate")] Student student)
+        public async Task<ActionResult> Create([Bind(Include = "DepartmentID,Name,Budget")] Department department)
         {
             if (ModelState.IsValid)
             {
-                db.Students.Add(student);
+                db.Departments.Add(department);
                 await db.SaveChangesAsync();
-                //redirect to the index action so you can see the Students table!
                 return RedirectToAction("Index");
             }
 
-            return View(student);
+            return View(department);
         }
 
-        // GET: Students/Edit/5
+        // GET: Departments/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Student student = await db.Students.FindAsync(id);
-            if (student == null)
+            Department department = await db.Departments.FindAsync(id);
+            if (department == null)
             {
                 return HttpNotFound();
             }
-            return View(student);
+            return View(department);
         }
 
-        // POST: Students/Edit/5
+        // POST: Departments/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "StudentID,LastName,FirstMidName,EnrollmentDate")] Student student)
+        public async Task<ActionResult> Edit([Bind(Include = "DepartmentID,Name,Budget")] Department department)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(student).State = EntityState.Modified;
+                db.Entry(department).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(student);
+            return View(department);
         }
 
-        // GET: Students/Delete/5
+        // GET: Departments/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Student student = await db.Students.FindAsync(id);
-            if (student == null)
+            Department department = await db.Departments.FindAsync(id);
+            if (department == null)
             {
                 return HttpNotFound();
             }
-            return View(student);
+            return View(department);
         }
 
-        // POST: Students/Delete/5
+        // POST: Departments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Student student = await db.Students.FindAsync(id);
-            db.Students.Remove(student);
+            Department department = await db.Departments.FindAsync(id);
+            db.Departments.Remove(department);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
